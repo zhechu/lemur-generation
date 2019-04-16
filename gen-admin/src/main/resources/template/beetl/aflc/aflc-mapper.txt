@@ -1,0 +1,53 @@
+package ${g.codePackage}.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import ${g.codePackage}.dto.${t.name}Dto;
+import ${g.codePackage}.entity.${t.name}Entity;
+import ${g.codePackage}.vo.${t.name}Vo;
+
+/**
+ * ${t.chinaName}
+ * @author ${g.author}
+ *
+ */
+@Mapper
+public interface ${t.name}Mapper {
+    
+    /**
+     * 添加
+     * @param ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity ${t.chinaName}
+     * @return 影响记录数
+     */
+    int insert(${t.name}Entity ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity);
+
+    /**
+     * 删除
+     * @param ${t.idName} 主键ID
+     * @return 影响记录数
+     */
+    int deleteBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${t.idType} ${t.idName});
+    
+    /**
+     * 更新
+     * @param ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity ${t.chinaName}
+     * @return 影响记录数
+     */
+    int updateBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${t.name}Entity ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity);
+
+    /**
+     * 按主键查询
+     * @param ${t.idName} 主键ID
+     * @return ${t.chinaName}
+     */
+    ${t.name}Vo selectBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${t.idType} ${t.idName});
+    
+    /**
+     * 查询
+     * @param ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto ${t.chinaName}
+     * @return ${t.chinaName}集合
+     */
+    List<${t.name}Vo> select(${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto);
+}

@@ -1,0 +1,56 @@
+package ${g.codePackage}.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ly.education.commons.entity.Result;
+import com.ly.spring.boot.pagehelper.dto.PageQueryParam;
+import com.ly.spring.boot.pagehelper.vo.Page;
+import ${g.codePackage}.dto.${t.name}Dto;
+import ${g.codePackage}.resource.${t.name}Resource;
+import ${g.codePackage}.vo.${t.name}Vo;
+import ${g.codePackage}.service.${t.name}Service;
+
+/**
+ * ${t.chinaName}
+ * @author ${g.author}
+ *
+ */
+@RestController
+public class ${t.name}Controller implements ${t.name}Resource {
+
+    @Autowired
+    private ${t.name}Service ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service;
+
+    @Override
+    public Result<?> create(@RequestBody ${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto) {
+        ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service.create(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto);
+        return Result.buildSuccessResult();
+    }
+
+    @Override
+    public Result<?> query(@RequestBody PageQueryParam<${t.name}Dto> pageQueryParam) {
+        Page<${t.name}Vo> page = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service.query(pageQueryParam);
+        return Result.buildSuccessResult(page);
+    }
+
+    @Override
+    public Result<?> update(@RequestBody ${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto) {
+        ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service.update(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto);
+        return Result.buildSuccessResult();
+    }
+
+    @Override
+    public Result<?> delete(@RequestBody ${t.idType}[] ${t.idName}s) {
+        ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service.delete(${t.idName}s);
+        return Result.buildSuccessResult();
+    }
+
+    @Override
+    public Result<?> detail(@PathVariable("${t.idName}") ${t.idType} ${t.idName}) {
+        return Result.buildSuccessResult(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service.find(${t.idName}));
+    }
+
+}

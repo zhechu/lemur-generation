@@ -1,0 +1,117 @@
+package ${g.codePackage}.service.impl;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ${g.codePackage}.dto.${t.name}Dto;
+import ${g.codePackage}.entity.${t.name}Entity;
+import ${g.codePackage}.exception.ServiceException;
+import com.ly.education.commons.exception.SimpleErrorCode;
+import com.ly.education.commons.util.PageUtil;
+import ${g.codePackage}.mapper.${t.name}Mapper;
+import ${g.codePackage}.service.${t.name}Service;
+import com.ly.education.commons.UUID.UUIDStringGenerator;
+import ${g.codePackage}.vo.${t.name}Vo;
+
+import com.ly.spring.boot.pagehelper.dto.PageQueryParam;
+import com.ly.spring.boot.pagehelper.util.PageHelperUtil;
+import com.ly.spring.boot.pagehelper.vo.Page;
+
+/**
+ * ${t.chinaName}
+ * @author ${g.author}
+ *
+ */
+@Service
+public class ${t.name}ServiceImpl implements ${t.name}Service {
+
+    @Autowired
+    private ${t.name}Mapper ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper;
+
+    @Autowired
+    private UUIDStringGenerator uuIDStringGenerator;
+    
+    @Transactional
+    @Override
+    public void create(${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto) {
+        ${t.name}Entity ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity = new ${t.name}Entity();
+        BeanUtils.copyProperties(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto, ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity);
+        
+        // 添加主键
+        ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity.set${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(uuIDStringGenerator.nextUUID());
+        
+        int result = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.insert(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity);
+        
+        // 添加失败
+        if (result < 1) {
+            throw new ServiceException(SimpleErrorCode.SaveFailure);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void update(${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto) {
+        // 检查主键是否为空
+        if (StringUtils.isEmpty(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto.get${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}())) {
+            throw new ServiceException(SimpleErrorCode.ParamsError);
+        }
+        
+        // 检查数据是否存在
+        ${t.name}Vo ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Vo = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.selectBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto.get${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}());
+        if (${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Vo == null) {
+            throw new ServiceException(SimpleErrorCode.ParamsError);
+        }
+        
+        ${t.name}Entity ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity = new ${t.name}Entity();
+        BeanUtils.copyProperties(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto, ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity);
+        
+        int result = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.updateBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Entity);
+
+        // 更新失败
+        if (result < 1) {
+            throw new ServiceException(SimpleErrorCode.ModifyFailure);
+        }
+    }
+
+    @Override
+    public ${t.name}Vo find(${t.idType} ${t.idName}) {
+        return ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.selectBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${t.idName});
+    }
+
+    @Override
+    public Page<${t.name}Vo> query(PageQueryParam<${t.name}Dto> pageQueryParam) {
+        PageHelperUtil.startPage(
+                pageQueryParam.getPageNo(), 
+                pageQueryParam.getPageSize(), 
+                PageUtil.getOrderBy(
+                        pageQueryParam.getAttributeNamesForOrderBy(), 
+                        ${t.name}Entity.class));
+        List<${t.name}Vo> ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Volist = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.select(pageQueryParam.getParam());
+        return PageHelperUtil.getPage(${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Volist);
+    }
+
+    @Transactional
+    @Override
+    public void delete(${t.idType}[] ${t.idName}s) {
+        for (${t.idType} ${t.idName} : ${t.idName}s) {
+            // 检查数据是否存在
+            ${t.name}Vo ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Vo = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.selectBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${t.idName});
+            if (${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Vo == null) {
+                throw new ServiceException(AppErrorCode.DataNotExisted);
+            }
+            
+            int result = ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper.deleteBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}(${t.idName});
+    
+            // 删除失败
+            if (result < 1) {
+                throw new ServiceException(SimpleErrorCode.DeleteFailure);
+            }
+        }
+    }
+    
+}

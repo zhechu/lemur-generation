@@ -1,0 +1,37 @@
+package ${g.codePackage}.entity;
+
+import com.ly.education.commons.annotation.entity.Column;
+import com.ly.education.commons.annotation.entity.Table;
+
+import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * ${t.chinaName}：${t.tableName}
+ * @author ${g.author}
+ *
+ */
+@Table("${t.tableName}")
+@Getter
+@Setter
+@ToString
+public class ${t.name}Entity implements Serializable {
+
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = -9003609292510835997L;
+
+<%for(field in t.fields){%>
+     /**
+     * ${field.chinaName}
+     */
+    @Column("${field.fieldName}")
+    private ${field.type} ${field.name};
+    
+<%}%>
+
+}

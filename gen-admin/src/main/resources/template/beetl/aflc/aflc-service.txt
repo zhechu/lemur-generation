@@ -1,0 +1,46 @@
+package ${g.codePackage}.service;
+
+import com.ly.spring.boot.pagehelper.dto.PageQueryParam;
+import com.ly.spring.boot.pagehelper.vo.Page;
+import ${g.codePackage}.dto.${t.name}Dto;
+import ${g.codePackage}.vo.${t.name}Vo;
+
+/**
+ * ${t.chinaName}
+ * @author ${g.author}
+ *
+ */
+public interface ${t.name}Service {
+
+    /**
+     * 添加
+     * @param ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto ${t.chinaName}
+     */
+    void create(${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto);
+
+    /**
+     * 删除
+     * @param ${t.idName}s 主键ID数组
+     */
+    void delete(${t.idType}[] ${t.idName}s);
+    
+    /**
+     * 更新
+     * @param ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto ${t.chinaName}
+     */
+    void update(${t.name}Dto ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Dto);
+
+    /**
+     * 按主键查询
+     * @param ${t.idName} 主键ID
+     * @return ${t.chinaName}
+     */
+    ${t.name}Vo find(${t.idType} ${t.idName});
+    
+    /**
+     * 查询
+     * @param pageQueryParam 分页查询参数
+     * @return ${t.chinaName}分页数据
+     */
+    Page<${t.name}Vo> query(PageQueryParam<${t.name}Dto> pageQueryParam);
+}

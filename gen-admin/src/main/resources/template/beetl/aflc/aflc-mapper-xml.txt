@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+    namespace="${g.codePackage}.mapper.${t.name}Mapper">
+
+    <resultMap id="BaseResultMap"
+        type="${g.codePackage}.entity.${t.name}Entity">
+<%for(field in t.fields){%>
+    <%if (field.fieldName == t.idFieldName) {%>
+        <id column="${field.fieldName}" property="${field.name}" jdbcType="${field.jdbcType}" />
+    <%}else{%>
+        <result column="${field.fieldName}" property="${field.name}" jdbcType="${field.jdbcType}" />
+    <%}%>
+<%}%>
+    </resultMap>
+
+<%
+var baseColumnList = '';
+for(field in t.fields){
+    baseColumnList = baseColumnList + '\n\t\t' + field.fieldName + ',';
+}
+if (strutil.length(baseColumnList) > 0) {
+    baseColumnList = strutil.subStringTo(baseColumnList,0,strutil.length(baseColumnList)-1);
+}
+%>
+
+    <sql id="Base_Column_List">${baseColumnList}
+    </sql>
+    
+    <resultMap id="${t.name}Map"
+        type="${g.codePackage}.vo.${t.name}Vo" extends="BaseResultMap">
+        
+    </resultMap>
+
+<%
+var names = '';
+for(field in t.fields){
+    names = names + '\n\t\t' + '#{' + field.name + ',jdbcType=' + field.jdbcType + '},';
+}
+if (strutil.length(names) > 0) {
+    names = strutil.subStringTo(names,0,strutil.length(names)-1);
+}
+%>
+
+    <!-- 添加 -->
+    <insert id="insert"
+        parameterType="${g.codePackage}.entity.${t.name}Entity">
+        insert into ${t.tableName} (${baseColumnList}
+        )
+        values (${names}
+        )
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="deleteBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}" parameterType="${t.idType}">
+        delete from ${t.tableName}
+        where ${t.idFieldName} = #{${t.idName},jdbcType=${t.idJdbcType}}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="updateBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}"
+        parameterType="${g.codePackage}.entity.${t.name}Entity">
+        update ${t.tableName}
+        <set>
+    <%for(field in t.fields){%>
+        <if test="${field.name} != null">
+            ${strutil.toUpperCase(field.fieldName)} = #{${field.name},jdbcType=${field.jdbcType}},
+        </if>
+    <%}%>
+        </set>
+        where ${t.idFieldName} = #{${t.idName},jdbcType=${t.idJdbcType}}
+    </update>
+
+    <!-- 按主键查询 -->
+    <select id="selectBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}" resultMap="${t.name}Map"
+        parameterType="${t.idType}">
+        select
+        <include refid="Base_Column_List" />
+        from ${t.tableName}
+        where ${t.idFieldName} = #{${t.idName},jdbcType=${t.idJdbcType}}
+    </select>
+    
+    <!-- 查询 -->
+    <select id="select" resultMap="${t.name}Map"
+        parameterType="${g.codePackage}.dto.${t.name}Dto">
+        select
+        <include refid="Base_Column_List" />
+        from ${t.tableName}
+    </select>
+
+</mapper>

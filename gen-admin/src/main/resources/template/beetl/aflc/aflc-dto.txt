@@ -1,0 +1,34 @@
+package ${g.codePackage}.dto;
+
+import java.io.Serializable;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * ${t.chinaName}
+ * @author ${g.author}
+ *
+ */
+@Getter
+@Setter
+@ToString
+public class ${t.name}Dto implements Serializable {
+
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = -9003609292510835997L;
+
+<%for(field in t.fields){%>
+     /**
+     * ${field.chinaName}
+     */
+     @ApiModelProperty("${field.chinaName}")
+    private ${field.type} ${field.name};
+    
+<%}%>
+
+}
