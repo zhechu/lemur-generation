@@ -11,6 +11,14 @@
 
 <https://github.com/zhechu/lemur-generation>
 
+# 启动方法
+
+1. 下载代码
+2. 导入 gen.sql 的 SQL
+3. 运行 GenApplication
+
+> TIPS：具体使用方法请看**使用说明**一节。
+
 # 模板开发
 
 推荐使用 **[beetl](http://ibeetl.com/guide)** 模板
