@@ -1,8 +1,8 @@
 #基础镜像
-FROM registry.ly-sky.com:5000/library/centos-jdk:1.8.25
+FROM 192.168.163.41:5000/library/centos-jdk:1.8.25
 
 #作者
-MAINTAINER yutianlong yutianlong@ly-sky.com
+MAINTAINER lingyuwang ling-yu-wang@qq.com
 
 #执行命令，主要用来安装相关的软件
 #RUN 
