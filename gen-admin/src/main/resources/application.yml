@@ -24,11 +24,12 @@ beetl:
 ###################  spring配置  ###################
 spring:
   redis:
-    host: 127.0.0.1
+    host: 192.168.110.81
     port: 6379
-    password:
+    password: gieV0Quei3eithutus
+    database: 3
   profiles:
-    active: ${configProfile:pro}
+    active: ${configProfile:dev}
   mvc:
     static-path-pattern: /static/**
     view:
@@ -70,9 +71,9 @@ mybatis-plus:
 spring:
   profiles: dev
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/code_gen?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-      username: root
-      password: 123456
+      url: jdbc:mysql://192.168.1.157:3306/grid_university_code_gen?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: university
+      password: gu@1234A
       filters: log4j,wall,mergeStat
 
 logging:
@@ -80,7 +81,7 @@ logging:
   level.cn.afterturn: warn
   level.org.springframework: warn
   level.org.apache.ibatis: warn
-  path: /home/logs/gencode/
+  path: ../
   file: gencode.log
 
 beetl:

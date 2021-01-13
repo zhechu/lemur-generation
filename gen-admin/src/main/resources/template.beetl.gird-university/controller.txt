@@ -1,0 +1,19 @@
+package ${g.codePackage}.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * ${t.chinaName}
+ *
+ * @author ${g.author}
+ */
+@RestController
+@RequestMapping("/api/${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}")
+public class ${t.name}Controller {
+
+    @Autowired
+    private ${t.name}Service ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Service;
+
+}

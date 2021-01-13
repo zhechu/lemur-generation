@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+    namespace="${g.codePackage}.mapper.${t.name}Mapper">
+
+    <resultMap id="BaseResultMap" type="${g.codePackage}.domain.${t.name}">
+<%for(field in t.fields){%>
+    <%if (field.fieldName == t.idFieldName) {%>
+        <id column="${field.fieldName}" property="${field.name}"/>
+    <%}else{%>
+        <result column="${field.fieldName}" property="${field.name}"/>
+    <%}%>
+<%}%>
+    </resultMap>
+
+<%
+var baseColumnList = '';
+for(field in t.fields){
+    baseColumnList = baseColumnList + '\n\t\t' + field.fieldName + ',';
+}
+if (strutil.length(baseColumnList) > 0) {
+    baseColumnList = strutil.subStringTo(baseColumnList,0,strutil.length(baseColumnList)-1);
+}
+%>
+
+    <sql id="Base_Column_List">${baseColumnList}
+    </sql>
+
+<%
+var names = '';
+for(field in t.fields){
+    names = names + '\n\t\t' + '#{' + field.name + '},';
+}
+if (strutil.length(names) > 0) {
+    names = strutil.subStringTo(names,0,strutil.length(names)-1);
+}
+%>
+
+    <insert id="add"
+        parameterType="${g.codePackage}.domain.${t.name}">
+        insert into ${t.tableName} (${baseColumnList}
+        )
+        values (${names}
+        )
+    </insert>
+
+    <delete id="deleteBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}" parameterType="${t.idType}">
+        delete from ${t.tableName}
+        where ${t.idFieldName} = #{${t.idName}}
+    </delete>
+
+    <update id="updateBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}"
+        parameterType="${g.codePackage}.domain.${t.name}">
+        update ${t.tableName}
+        <set>
+    <%for(field in t.fields){%>
+        <if test="${field.name} != null">
+            ${field.fieldName} = #{${field.name}},
+        </if>
+    <%}%>
+        </set>
+        where ${t.idFieldName} = #{${t.idName}}
+    </update>
+
+    <select
+        id="getBy${strutil.toUpperCase(strutil.subStringTo (t.idName,0,1))}${strutil.subString  (t.idName,1)}"
+        resultMap="BaseResultMap"
+        parameterType="${t.idType}">
+        select
+        <include refid="Base_Column_List" />
+        from ${t.tableName}
+        where ${t.idFieldName} = #{${t.idName}}
+    </select>
+    
+    <select id="select" resultMap="BaseResultMap"
+        parameterType="${g.codePackage}.domain.${t.name}">
+        select
+        <include refid="Base_Column_List" />
+        from ${t.tableName}
+    </select>
+
+</mapper>

@@ -1,0 +1,10 @@
+package ${g.codePackage}.service;
+
+/**
+ * ${t.chinaName}
+ *
+ * @author ${g.author}
+ */
+public interface ${t.name}Service {
+
+}

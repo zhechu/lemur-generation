@@ -1,0 +1,25 @@
+package ${g.codePackage}.domain;
+
+import com.tianque.griduniversity.common.domain.TenantDomain;
+import lombok.Data;
+import lombok.ToString;
+
+/**
+ * ${t.chinaName}
+ *
+ * @author ${g.author}
+ */
+@Data
+@ToString(callSuper = true)
+public class ${t.name} extends TenantDomain {
+
+  private static final long serialVersionUID = -1;
+
+<%for(field in t.fields){%>
+  /**
+   * ${field.chinaName}
+   */
+  private ${field.type} ${field.name};
+
+<%}%>
+}

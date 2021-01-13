@@ -1,0 +1,12 @@
+package ${g.codePackage}.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ${t.name}ServiceImpl implements ${t.name}Service {
+
+    @Autowired
+    private ${t.name}Mapper ${strutil.toLowerCase(strutil.subStringTo (t.name,0,1))}${strutil.subString  (t.name,1)}Mapper;
+
+}
